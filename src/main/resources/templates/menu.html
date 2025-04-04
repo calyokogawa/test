@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf-extras-springsecurity6">
+<head>
+<meta charset="UTF-8">
+<title>メニュー</title>
+</head>
+<body>
+	<h2>メニュー画面</h2>
+	<hr>
+	<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/todos}">
+		ToDo一覧へ
+	</a>
+	<br>
+		<div sec:authorize="hasAuthority('USER')">
+			【一般権限で表示される部分】
+		</div>
+	<div sec:authentication="name">
+		ログイン情報のname値に書き変わる
+	</div>
+		<div th:text="${#authentication.principal.displayname}">
+			新たに追加したdisplayname値に書き換わる
+		</div>
+		<div sec:authorize="isAuthenticated()">
+			認証されたユーザーのみ表示
+		</div>
+	<br>
+	<!-- ログアウト -->
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="ログアウト">
+	</form>
+
+</body>
+</html>
